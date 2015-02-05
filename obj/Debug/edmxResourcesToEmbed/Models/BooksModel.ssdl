@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BooksInfoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="BooksInfoModelStoreContainer">
+    <EntitySet Name="Book_Description" EntityType="BooksInfoModel.Store.Book_Description" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Books" EntityType="BooksInfoModel.Store.Books" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Contributor" EntityType="BooksInfoModel.Store.Contributor" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Book_Description_Books" Association="BooksInfoModel.Store.FK_Book_Description_Books">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="Book_Description" EntitySet="Book_Description" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contributor_Books" Association="BooksInfoModel.Store.FK_Contributor_Books">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="Contributor" EntitySet="Contributor" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Book_Description">
+    <Key>
+      <PropertyRef Name="DescriptionID" />
+    </Key>
+    <Property Name="DescriptionID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BookID" Type="bigint" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Date_Created" Type="datetime2" />
+  </EntityType>
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Book_ID" Type="bigint" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="2000" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="alias" Type="varchar" MaxLength="2000" />
+    <Property Name="url" Type="varchar" MaxLength="100" />
+    <Property Name="image_url" Type="varchar(max)" />
+    <Property Name="ISBN" Type="varchar" MaxLength="500" />
+    <Property Name="ratingcount" Type="int" />
+    <Property Name="label" Type="varchar" MaxLength="500" />
+    <Property Name="Price" Type="varchar" MaxLength="500" />
+    <Property Name="IsMarked" Type="bit" />
+  </EntityType>
+  <EntityType Name="Contributor">
+    <Key>
+      <PropertyRef Name="ContributorID" />
+    </Key>
+    <Property Name="ContributorID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="alias" Type="varchar" MaxLength="1000" />
+    <Property Name="Name" Type="varchar" MaxLength="1000" />
+    <Property Name="Url" Type="varchar" MaxLength="2000" />
+    <Property Name="BookID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Book_Description_Books">
+    <End Role="Books" Type="BooksInfoModel.Store.Books" Multiplicity="0..1" />
+    <End Role="Book_Description" Type="BooksInfoModel.Store.Book_Description" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Book_Description">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contributor_Books">
+    <End Role="Books" Type="BooksInfoModel.Store.Books" Multiplicity="1" />
+    <End Role="Contributor" Type="BooksInfoModel.Store.Contributor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Contributor">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

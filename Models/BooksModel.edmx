@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BooksInfoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="BooksInfoModelStoreContainer">
+          <EntitySet Name="Book_Description" EntityType="BooksInfoModel.Store.Book_Description" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Books" EntityType="BooksInfoModel.Store.Books" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Contributor" EntityType="BooksInfoModel.Store.Contributor" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Book_Description_Books" Association="BooksInfoModel.Store.FK_Book_Description_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Book_Description" EntitySet="Book_Description" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contributor_Books" Association="BooksInfoModel.Store.FK_Contributor_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Contributor" EntitySet="Contributor" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Book_Description">
+          <Key>
+            <PropertyRef Name="DescriptionID" />
+          </Key>
+          <Property Name="DescriptionID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BookID" Type="bigint" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Date_Created" Type="datetime2" />
+        </EntityType>
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Book_ID" Type="bigint" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="2000" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="alias" Type="varchar" MaxLength="2000" />
+          <Property Name="url" Type="varchar" MaxLength="100" />
+          <Property Name="image_url" Type="varchar(max)" />
+          <Property Name="ISBN" Type="varchar" MaxLength="500" />
+          <Property Name="ratingcount" Type="int" />
+          <Property Name="label" Type="varchar" MaxLength="500" />
+          <Property Name="Price" Type="varchar" MaxLength="500" />
+          <Property Name="IsMarked" Type="bit" />
+        </EntityType>
+        <EntityType Name="Contributor">
+          <Key>
+            <PropertyRef Name="ContributorID" />
+          </Key>
+          <Property Name="ContributorID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="alias" Type="varchar" MaxLength="1000" />
+          <Property Name="Name" Type="varchar" MaxLength="1000" />
+          <Property Name="Url" Type="varchar" MaxLength="2000" />
+          <Property Name="BookID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Book_Description_Books">
+          <End Role="Books" Type="BooksInfoModel.Store.Books" Multiplicity="0..1" />
+          <End Role="Book_Description" Type="BooksInfoModel.Store.Book_Description" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Book_Description">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contributor_Books">
+          <End Role="Books" Type="BooksInfoModel.Store.Books" Multiplicity="1" />
+          <End Role="Contributor" Type="BooksInfoModel.Store.Contributor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contributor">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BooksInfoModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BooksInfoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Book_Description" EntityType="BooksInfoModel.Book_Description" />
+          <EntitySet Name="Books" EntityType="BooksInfoModel.Book" />
+          <EntitySet Name="Contributors" EntityType="BooksInfoModel.Contributor" />
+          <AssociationSet Name="FK_Book_Description_Books" Association="BooksInfoModel.FK_Book_Description_Books">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Description" EntitySet="Book_Description" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contributor_Books" Association="BooksInfoModel.FK_Contributor_Books">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Contributor" EntitySet="Contributors" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Book_Description">
+          <Key>
+            <PropertyRef Name="DescriptionID" />
+          </Key>
+          <Property Type="Int64" Name="DescriptionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="BookID" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="Date_Created" />
+          <NavigationProperty Name="Book" Relationship="BooksInfoModel.FK_Book_Description_Books" FromRole="Book_Description" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="Book_ID" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="alias" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="url" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="image_url" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISBN" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ratingcount" />
+          <Property Type="String" Name="label" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Price" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsMarked" />
+          <NavigationProperty Name="Book_Description" Relationship="BooksInfoModel.FK_Book_Description_Books" FromRole="Book" ToRole="Book_Description" />
+          <NavigationProperty Name="Contributors" Relationship="BooksInfoModel.FK_Contributor_Books" FromRole="Book" ToRole="Contributor" />
+        </EntityType>
+        <EntityType Name="Contributor">
+          <Key>
+            <PropertyRef Name="ContributorID" />
+          </Key>
+          <Property Type="Int64" Name="ContributorID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="alias" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Name" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Url" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="BookID" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="BooksInfoModel.FK_Contributor_Books" FromRole="Contributor" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_Book_Description_Books">
+          <End Type="BooksInfoModel.Book" Role="Book" Multiplicity="0..1" />
+          <End Type="BooksInfoModel.Book_Description" Role="Book_Description" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Book_Description">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contributor_Books">
+          <End Type="BooksInfoModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BooksInfoModel.Contributor" Role="Contributor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Contributor">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BooksInfoModelStoreContainer" CdmEntityContainer="BooksInfoEntities">
+          <EntitySetMapping Name="Book_Description">
+            <EntityTypeMapping TypeName="BooksInfoModel.Book_Description">
+              <MappingFragment StoreEntitySet="Book_Description">
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="DescriptionID" ColumnName="DescriptionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BooksInfoModel.Book">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="IsMarked" ColumnName="IsMarked" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="label" ColumnName="label" />
+                <ScalarProperty Name="ratingcount" ColumnName="ratingcount" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contributors">
+            <EntityTypeMapping TypeName="BooksInfoModel.Contributor">
+              <MappingFragment StoreEntitySet="Contributor">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="ContributorID" ColumnName="ContributorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BooksModel" ZoomLevel="72">
+        <EntityTypeShape EntityType="BooksInfoModel.Book_Description" Width="1.5" PointX="3" PointY="1.125" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="BooksInfoModel.Book" Width="1.5" PointX="0.75" PointY="1.625" Height="3.7109993489583317" />
+        <EntityTypeShape EntityType="BooksInfoModel.Contributor" Width="1.5" PointX="3" PointY="3.75" Height="2.1725878906249996" />
+        <AssociationConnector Association="BooksInfoModel.FK_Book_Description_Books" >
+          <ConnectorPoint PointX="2.25" PointY="2.3651432291666659" />
+          <ConnectorPoint PointX="3" PointY="2.3651432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="BooksInfoModel.FK_Contributor_Books" >
+          <ConnectorPoint PointX="2.25" PointY="4.5429996744791659" />
+          <ConnectorPoint PointX="3" PointY="4.5429996744791659" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

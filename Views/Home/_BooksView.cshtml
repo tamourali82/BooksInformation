@@ -1,0 +1,122 @@
+﻿<div class="col-xs-12 col-sm-6 col-lg-8" style="background: rgb(255, 255, 255);">
+    <h3>Search Result</h3>
+    @{
+        int i = 0;
+     }
+    
+    @foreach (var item in Model)
+    {
+ 
+        
+    
+    <div class="col-lg-3" style="float:left;width:180px;height:370px;">
+    <a href="@item.url" target="_blank" >
+    <div id="img1" style="position: relative; float: left; ">
+    
+    <img src="@item.image_url" class="img-thumbnail" alt="Cinque Terre" height="236"/>
+    
+    @if (@item.IsMarked == true)
+    {
+    <input type="checkbox" id="chk_@i" value="@item.ID" style="position: absolute; bottom: 7px; right: 7px;" checked="checked"/>
+    }
+    else
+    {
+        <input type="checkbox" id="chk_@i" value="@item.ID" style="position: absolute; bottom: 7px; right: 7px;"/>
+    }
+       
+     </div>
+      <span style=" font-size: small;font-family: fantasy;">
+         
+         <label id="lbl1_@i" class="lbl1" title="@item.Title" style="padding-bottom: 5px;height: 50px;font-size:13px;">@item.Title</label></span></a><br />
+     <div id="text1" style="float:left;width: 155px;">
+     
+        
+        <span style="font-family: initial; color:rgb(139, 19, 19); font-size: 13px;"> 
+        <label id="lbl2_@i" class="lbl2" title="Authors" style="height: 50px;">
+       @foreach (var objContributor in item.Contributors)
+       {
+		 @objContributor.Name.ToString().Trim() <span>,</span>
+       } 
+        </label></span><br /><br />
+         
+         <div class="stars_small" style="display:inline;" data-rating="@item.ratingcount">
+            <input type="hidden" name="score"  readonly="readonly"/> 
+        </div><div style="display:inline;"> (@item.ratingcount)</div>
+         
+         
+         <br /><br />
+         <label id="lbl4_@i" class="lbl4" title="@item.label" style="font-size: 13px;">@item.label</label><br /><br />
+         @* <span style=" font-size: medium;font-family: fantasy;">Pris kr.
+          <label id="lbl5_@i" class="lbl5" title="@item.Price" style="font-size: 13px;">@item.Price</label></span><br />*@
+     
+    
+    </div>
+    </div>
+   
+   
+    
+        i++;
+   
+    }
+    
+  </div>
+
+  <link rel="stylesheet" href="@Url.Content("~/Content/jquery.raty.css")"/>
+  <script src="../../Scripts/jquery.js"></script>
+   <script src="../../Scripts/jquery.raty.js"></script>
+
+
+  <script type="text/javascript">
+
+      $.fn.raty.defaults.path = '../../Images';
+
+
+          $('.stars_small').raty({
+              readOnly: true,
+              half: false,
+              number: 5,
+              score: function () {
+                  return $(this).attr('data-rating');
+              }
+          });
+
+
+
+      $(function () {
+          $(".lbl1").each(function (i) {
+              len = $(this).text().length;
+              if (len > 30) {
+                  $(this).text($(this).text().substr(0, 27) + '...');
+              }
+          });
+      });
+
+      $(function () {
+          $(".lbl2").each(function (i) {
+              len = $(this).text().trim().length;
+              if (len > 30) {
+                  $(this).text($(this).text().substr(0, 30) + '...');
+              }
+          });
+      });
+
+      $(function () {
+          $(".lbl4").each(function (i) {
+              len = $(this).text().length;
+              if (len > 30) {
+                  $(this).text($(this).text().substr(0, 30) + '...');
+              }
+          });
+      });
+
+      $(function () {
+          $(".lbl5").each(function (i) {
+              len = $(this).text().length;
+              if (len > 30) {
+                  $(this).text($(this).text().substr(0, 30) + '...');
+              }
+          });
+      });
+
+  </script>
+  

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BooksInfoModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="BooksInfoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Book_Description" EntityType="BooksInfoModel.Book_Description" />
+    <EntitySet Name="Books" EntityType="BooksInfoModel.Book" />
+    <EntitySet Name="Contributors" EntityType="BooksInfoModel.Contributor" />
+    <AssociationSet Name="FK_Book_Description_Books" Association="BooksInfoModel.FK_Book_Description_Books">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Book_Description" EntitySet="Book_Description" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Contributor_Books" Association="BooksInfoModel.FK_Contributor_Books">
+      <End Role="Book" EntitySet="Books" />
+      <End Role="Contributor" EntitySet="Contributors" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Book_Description">
+    <Key>
+      <PropertyRef Name="DescriptionID" />
+    </Key>
+    <Property Type="Int64" Name="DescriptionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="BookID" />
+    <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="Date_Created" />
+    <NavigationProperty Name="Book" Relationship="BooksInfoModel.FK_Book_Description_Books" FromRole="Book_Description" ToRole="Book" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="Book_ID" Nullable="false" />
+    <Property Type="String" Name="Title" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="alias" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="url" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="image_url" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ISBN" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="ratingcount" />
+    <Property Type="String" Name="label" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Price" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="IsMarked" />
+    <NavigationProperty Name="Book_Description" Relationship="BooksInfoModel.FK_Book_Description_Books" FromRole="Book" ToRole="Book_Description" />
+    <NavigationProperty Name="Contributors" Relationship="BooksInfoModel.FK_Contributor_Books" FromRole="Book" ToRole="Contributor" />
+  </EntityType>
+  <EntityType Name="Contributor">
+    <Key>
+      <PropertyRef Name="ContributorID" />
+    </Key>
+    <Property Type="Int64" Name="ContributorID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="alias" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Name" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Url" MaxLength="2000" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="BookID" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="BooksInfoModel.FK_Contributor_Books" FromRole="Contributor" ToRole="Book" />
+  </EntityType>
+  <Association Name="FK_Book_Description_Books">
+    <End Type="BooksInfoModel.Book" Role="Book" Multiplicity="0..1" />
+    <End Type="BooksInfoModel.Book_Description" Role="Book_Description" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Book_Description">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Contributor_Books">
+    <End Type="BooksInfoModel.Book" Role="Book" Multiplicity="1" />
+    <End Type="BooksInfoModel.Contributor" Role="Contributor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Contributor">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

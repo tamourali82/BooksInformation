@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BooksInfoModelStoreContainer" CdmEntityContainer="BooksInfoEntities">
+    <EntitySetMapping Name="Book_Description">
+      <EntityTypeMapping TypeName="BooksInfoModel.Book_Description">
+        <MappingFragment StoreEntitySet="Book_Description">
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="BookID" ColumnName="BookID" />
+          <ScalarProperty Name="DescriptionID" ColumnName="DescriptionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="BooksInfoModel.Book">
+        <MappingFragment StoreEntitySet="Books">
+          <ScalarProperty Name="IsMarked" ColumnName="IsMarked" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="label" ColumnName="label" />
+          <ScalarProperty Name="ratingcount" ColumnName="ratingcount" />
+          <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+          <ScalarProperty Name="image_url" ColumnName="image_url" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contributors">
+      <EntityTypeMapping TypeName="BooksInfoModel.Contributor">
+        <MappingFragment StoreEntitySet="Contributor">
+          <ScalarProperty Name="BookID" ColumnName="BookID" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+          <ScalarProperty Name="ContributorID" ColumnName="ContributorID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
